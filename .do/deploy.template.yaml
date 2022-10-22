@@ -6,7 +6,7 @@ functions:
     branch: master
     deploy_on_push: true
     repo: 0x213F/serverless-sounds-radiant
-  name: py-api
+  name: serverless-sounds-radiant-api
   routes:
   - path: /
   source_dir: /
