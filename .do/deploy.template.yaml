@@ -5,9 +5,9 @@ functions:
 - github:
     branch: master
     deploy_on_push: true
-    repo: digitalocean/sample-functions-python-helloworld
+    repo: 0x213F/serverless-sounds-radiant
   name: py-api
   routes:
   - path: /
   source_dir: /
-name: python-helloworld
+name: serverless-sounds-radiant
