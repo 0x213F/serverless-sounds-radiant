@@ -13,7 +13,6 @@ def _setup_boto3_client(session):
             "success": False,
             "message": "Misconfigued environment variables"
         }
-
     return session.client(
         "s3",
         region_name=region_name,
@@ -22,19 +21,23 @@ def _setup_boto3_client(session):
         aws_secret_access_key=aws_secret_access_key,
     )
 
-def _get_email_subcribers_using_boto3(session):
-    bucket_name = "sounds-radiant"
-    file_name = "private/email-subscribers.txt"
 
-    obj = s3.Object(bucket_name, file_name)
-    return obj.get()['Body'].read().decode("utf-8")
+def _get_email_subcribers_using_boto3(session, client):
+    '''
+    https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.list_objects_v2
+    '''
+    bucket = "sounds-radiant"
+    prefix = "private/email-subscribers/"
+    obj = client.list_objects_v2(Bucket=bucket, Prefix=prefix)
+    # Get all "local filenames"
+    return [c['Key'][len(prefix):] for c in obj['Contents']]
 
 
 def main(args):
     boto3_session = boto3.session.Session()
-    boto3_client = _setup_boto3_client(session)
+    boto3_client = _setup_boto3_client(boto3_session)
 
-    email_subscribers = _get_email_subcribers_using_boto3
+    email_subscribers = _get_email_subcribers_using_boto3(boto3_session, boto3_client)
     name = args.get("name", "Sounds Radiant")
     greeting = "Hello " + name + "!"
     print(greeting)
