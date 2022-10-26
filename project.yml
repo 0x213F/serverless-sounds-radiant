@@ -1,10 +1,10 @@
-environment:
-    BOTO3_REGION_NAME: "${BOTO3_REGION_NAME}"
-    BOTO3_ENDPOINT_URL: "${BOTO3_ENDPOINT_URL}"
-    BOTO3_ACCESS_KEY: "${BOTO3_ACCESS_KEY}"
-    BOTO3_SECRET_KEY: "${BOTO3_SECRET_KEY}"
 packages:
-  - name: forms
+  environment:
+      BOTO3_REGION_NAME: "${BOTO3_REGION_NAME}"
+      BOTO3_ENDPOINT_URL: "${BOTO3_ENDPOINT_URL}"
+      BOTO3_ACCESS_KEY: "${BOTO3_ACCESS_KEY}"
+      BOTO3_SECRET_KEY: "${BOTO3_SECRET_KEY}"
+  - name: joke
     actions:
-      - name: subscribe
+      - name: joke
         runtime: 'python:default'
